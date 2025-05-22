@@ -3,8 +3,8 @@ services:
 
     gateway:
         build:
-            context: .
-            dockerfile: ./gateway/Dockerfile
+            context: ./gateway
+            dockerfile: Dockerfile
         ports:
             - '3000:3000'
         environment:

@@ -9,10 +9,15 @@ RUN apk add --no-cache python3 py3-pip bash \
 
 ENV PATH="/venv/bin:$PATH"
 
-COPY gateway ./
+COPY . .
+RUN chmod +x ./scripts/queue.sh
+
+RUN apk add --no-cache dos2unix \
+  && dos2unix ./scripts/queue.sh \
+  && chmod +x ./scripts/queue.sh
 
 RUN npm install
-
 RUN npm run build
+RUN npm run prisma:generate
 
 CMD ["sh", "-c", "./scripts/queue.sh && npm run start:prod"]
